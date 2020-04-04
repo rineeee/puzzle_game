@@ -112,7 +112,7 @@ void random3() {
     int k = 0;
     ObjectID temp;
     srand(time(NULL));
-    while (k < 3) {
+    while (k < 100) {
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 if (r[i][j] == 1) {
@@ -241,7 +241,7 @@ void random4() {
     int k_ = 0;
     ObjectID temp_;
     srand(time(NULL));
-    while (k_ < 3) {
+    while (k_ < 100) {
         for (i_ = 0; i_ < 4; i_++) {
             for (j_ = 0; j_ < 4; j_++) {
                 if (r_[i_][j_] == 1) {
