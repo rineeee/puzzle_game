@@ -7,7 +7,7 @@
 #pragma comment(lib, "Bangtal.lib")
 
 SceneID scene1, scene2, scene3;
-ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4;
+ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4,restart;
 SoundID ost1;
 TimerID timer1;
 
@@ -20,6 +20,7 @@ void timerCallback(TimerID timer) {
     if (timer == timer1) {
         showMessage("다시 도전 해보세요!");
         enterScene(scene1);
+        showObject(restart);
         showObject(start3);
         showObject(start4);
         showObject(end);
@@ -51,6 +52,7 @@ void endG3() {
     if (s[0][0] == a && s[0][1] == b && s[0][2] == c && s[1][0] == d && s[1][1] == e && s[1][2] == f && s[2][0] == g && s[2][1] == h && s[2][2] == i) {
         showMessage("성공!");
         enterScene(scene1);
+        showObject(restart);
         showObject(start3);
         showObject(start4);
         hideObject(hint3);
@@ -64,6 +66,7 @@ void endG4() {
         showMessage("성공!");
         enterScene(scene1);
         showObject(start3);
+        showObject(restart);
         showObject(start4);
         showObject(end);
         hideObject(hint4);
@@ -350,6 +353,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         hideObject(start3);
         hideObject(start4);
         hideObject(end);
+        hideObject(restart);
         enterScene(scene2);
         setTimer(timer1, 270.0f);
        
@@ -362,6 +366,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         hideObject(start4);
         hideObject(end);
         enterScene(scene3);
+        hideObject(restart);
         setTimer(timer1, 270.f);
         random4();
         startTimer(timer1);
@@ -685,7 +690,7 @@ int main() {
     scene2 = createScene("3X3퍼즐", "구멍.png");
     scene3 = createScene("4X4퍼즐", "구멍.png");
 
-    
+    restart = createObject("restart", "restart.png", scene1, 700, 550, true);
     hint3 = createObject("hint", "hint.png", scene2, 1000, 450, true);
     hintp3 = createObject("hint", "hintp.png", scene2, 950, 200, false);
     hint4 = createObject("hint", "hint.png", scene3, 1000, 450, true);
