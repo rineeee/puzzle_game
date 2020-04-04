@@ -13,6 +13,21 @@ SoundID ost1;
 int blankX = 738, blankY = 59, m, m__, blankX_ = 787, blankY_ = 60;
 int s[3][3], s_[4][4];
 
+void sceneCallback(SceneID scene, EventID event)
+{
+    if (scene == scene2) {
+        if (event == EVENT_ENTER_SCENE)
+            playSound(ost1);
+        else if (event == EVENT_LEAVE_SCENE)
+            stopSound(ost1);
+    }
+    else if (scene == scene3) {
+        if (event == EVENT_ENTER_SCENE)
+            playSound(ost1);
+        else if (event == EVENT_LEAVE_SCENE)
+            stopSound(ost1);
+    }
+}
 
 void endG3() {
     if (s[0][0] == a && s[0][1] == b && s[0][2] == c && s[1][0] == d && s[1][1] == e && s[1][2] == f && s[2][0] == g && s[2][1] == h && s[2][2] == i) {
@@ -639,7 +654,9 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 
 int main() {
     setMouseCallback(mouseCallback);
+    setSceneCallback(sceneCallback);
 
+    ost1 = createSound("ost1.wav");
     scene1 = createScene("인어공주 퍼즐", "배경.jpg");
     scene2 = createScene("3X3퍼즐", "구멍.png");
     scene3 = createScene("4X4퍼즐", "구멍.png");
