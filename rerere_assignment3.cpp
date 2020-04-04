@@ -9,6 +9,24 @@
 SceneID scene1, scene2, scene3;
 ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4;
 SoundID ost1;
+TimerID timer1;
+
+void time() {
+    timer1 = createTimer(270.0f);
+    showTimer(timer1);
+
+}
+void timerCallback(TimerID timer) {
+    if (timer == timer1) {
+        showMessage("다시 도전 해보세요!");
+        enterScene(scene1);
+        showObject(start3);
+        showObject(start4);
+        showObject(end);
+
+    }
+}
+
 
 int blankX = 738, blankY = 59, m, m__, blankX_ = 787, blankY_ = 60;
 int s[3][3], s_[4][4];
@@ -38,7 +56,7 @@ void endG3() {
         hideObject(hint3);
         hideObject(hintp3);
         showObject(end);
-
+        stopTimer(timer1);
     }
 }
 void endG4() {
@@ -50,7 +68,7 @@ void endG4() {
         showObject(end);
         hideObject(hint4);
         hideObject(hintp4);
-
+        stopTimer(timer1);
     }
 }
 
@@ -333,7 +351,10 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         hideObject(start4);
         hideObject(end);
         enterScene(scene2);
+        setTimer(timer1, 270.0f);
+       
         random3();
+         startTimer(timer1);
         return;
     }
     if (object == start4) {
@@ -341,7 +362,10 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         hideObject(start4);
         hideObject(end);
         enterScene(scene3);
+        setTimer(timer1, 270.f);
         random4();
+        startTimer(timer1);
+       
         return;
     }
     
@@ -655,7 +679,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 int main() {
     setMouseCallback(mouseCallback);
     setSceneCallback(sceneCallback);
-
+    setTimerCallback(timerCallback);
     ost1 = createSound("ost1.wav");
     scene1 = createScene("인어공주 퍼즐", "배경.jpg");
     scene2 = createScene("3X3퍼즐", "구멍.png");
@@ -697,6 +721,7 @@ int main() {
 
     point = createObject("point", "point.png", scene1, 738, 459, false);
     scaleObject(point, 0.5f);
+    time();
 
     startGame(scene1);
     playSound(ost1);
