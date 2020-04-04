@@ -7,7 +7,7 @@
 #pragma comment(lib, "Bangtal.lib")
 
 SceneID scene1, scene2, scene3;
-ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4,restart,key,chest3,stopwatch,chest4;
+ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4,restart,key,chest3,stopwatch,chest4,restart3,restart4;
 SoundID ost1;
 TimerID timer1;
 
@@ -23,8 +23,8 @@ void timerCallback(TimerID timer) {
         showMessage("다시 도전 해보세요!");
         enterScene(scene1);
         showObject(restart);
-        showObject(start3);
-        showObject(start4);
+        showObject(restart3);
+        showObject(restart4);
         showObject(end);
 
     }
@@ -57,8 +57,8 @@ void endG3() {
         setObjectImage(chest3, "chest.png");
         enterScene(scene1);
         showObject(restart);
-        showObject(start3);
-        showObject(start4);
+        showObject(restart3);
+        showObject(restart4);
         
         hideObject(hintp3);
         showObject(end);        
@@ -73,9 +73,9 @@ void endG4() {
         showMessage("성공!");
         setObjectImage(chest4, "chest.png");
         enterScene(scene1);
-        showObject(start3);
+        showObject(restart3);
         showObject(restart);
-        showObject(start4);
+        showObject(restart4);
         showObject(end);
         
         
@@ -112,7 +112,7 @@ void random3() {
     int k = 0;
     ObjectID temp;
     srand(time(NULL));
-    while (k < 100) {
+    while (k < 3) {
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 if (r[i][j] == 1) {
@@ -241,7 +241,7 @@ void random4() {
     int k_ = 0;
     ObjectID temp_;
     srand(time(NULL));
-    while (k_ < 100) {
+    while (k_ < 3) {
         for (i_ = 0; i_ < 4; i_++) {
             for (j_ = 0; j_ < 4; j_++) {
                 if (r_[i_][j_] == 1) {
@@ -383,6 +383,32 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         
         startTimer(timer1);
        
+        return;
+    }
+    if (object == restart3) {
+        hideObject(restart3);
+        hideObject(restart4);
+        hideObject(end);
+        hideObject(restart);
+        enterScene(scene2);
+        setTimer(timer1, 270.0f);
+        closed1 = true;
+        random3();
+        startTimer(timer1);
+        return;
+    }
+    if (object == restart4) {
+        hideObject(restart3);
+        hideObject(restart4);
+        hideObject(end);
+        enterScene(scene3);
+        hideObject(restart);
+        setTimer(timer1, 270.f);
+        closed2 = true;
+        random4();
+
+        startTimer(timer1);
+
         return;
     }
     
@@ -738,6 +764,8 @@ int main() {
     hintp4 = createObject("hint", "hintp.png", scene3, 950, 200, false);
     start3 = createObject("시작 버튼", "start3.png", scene1, 250, 70, true);
     start4 = createObject("시작 버튼", "start4.png", scene1, 550, 70, true);
+    restart3 = createObject("시작 버튼", "restart3.png", scene1, 250, 70, false);
+    restart4 = createObject("시작 버튼", "restart4.png", scene1, 550, 70, false);
     end = createObject("끝 버튼", "end.png", scene1, 850, 70, true);
     a = createObject("1", "1.png", scene2, 338, 459, true);
     b = createObject("2", "2.png", scene2, 538, 459, true);
