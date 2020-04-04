@@ -7,7 +7,7 @@
 #pragma comment(lib, "Bangtal.lib")
 
 SceneID scene1, scene2, scene3;
-ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_;
+ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4;
 SoundID ost1;
 
 int blankX = 738, blankY = 59, m, m__, blankX_ = 787, blankY_ = 60;
@@ -20,6 +20,8 @@ void endG3() {
         enterScene(scene1);
         showObject(start3);
         showObject(start4);
+        hideObject(hint3);
+        hideObject(hintp3);
         showObject(end);
 
     }
@@ -31,6 +33,8 @@ void endG4() {
         showObject(start3);
         showObject(start4);
         showObject(end);
+        hideObject(hint4);
+        hideObject(hintp4);
 
     }
 }
@@ -325,8 +329,15 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         random4();
         return;
     }
+    
     if (object == end) {
         endGame();
+    }
+    if (object == hint3) {
+        showObject(hintp3);
+    }
+    if (object == hint4) {
+        showObject(hintp4);
     }
 
     if (object == i)
@@ -633,8 +644,11 @@ int main() {
     scene2 = createScene("3X3퍼즐", "구멍.png");
     scene3 = createScene("4X4퍼즐", "구멍.png");
 
-    SoundID ost1 = createSound("ost1.wav");
-
+    
+    hint3 = createObject("hint", "hint.png", scene2, 1000, 450, true);
+    hintp3 = createObject("hint", "hintp.png", scene2, 950, 200, false);
+    hint4 = createObject("hint", "hint.png", scene3, 1000, 450, true);
+    hintp4 = createObject("hint", "hintp.png", scene3, 950, 200, false);
     start3 = createObject("시작 버튼", "start3.png", scene1, 250, 70, true);
     start4 = createObject("시작 버튼", "start4.png", scene1, 550, 70, true);
     end = createObject("끝 버튼", "end.png", scene1, 850, 70, true);
