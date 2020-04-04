@@ -42,7 +42,7 @@ void sceneCallback(SceneID scene, EventID event)
         else if (event == EVENT_LEAVE_SCENE)
             stopSound(ost1);
     }
-    else if (scene == scene3) {
+     if (scene == scene3) {
         if (event == EVENT_ENTER_SCENE)
             playSound(ost1);
         else if (event == EVENT_LEAVE_SCENE)
@@ -52,32 +52,36 @@ void sceneCallback(SceneID scene, EventID event)
 
 void endG3() {
     if (s[0][0] == a && s[0][1] == b && s[0][2] == c && s[1][0] == d && s[1][1] == e && s[1][2] == f && s[2][0] == g && s[2][1] == h && s[2][2] == i) {
+        stopTimer(timer1);
         showMessage("성공!");
+        setObjectImage(chest3, "chest.png");
         enterScene(scene1);
         showObject(restart);
         showObject(start3);
         showObject(start4);
-        hideObject(hint3);
+        
         hideObject(hintp3);
-        showObject(end);
-        hideObject(chest);
-        hideObject(stopwatch);
-        stopTimer(timer1);
+        showObject(end);        
+     
+  
+        
     }
 }
 void endG4() {
     if (s_[0][0] == a_ && s_[0][1] == b_ && s_[0][2] == c_ && s_[0][3] == d_ && s_[1][0] == e_ && s_[1][1] == f_ && s_[1][2] == g_ && s_[1][3] == h_ && s_[2][0] == i_ && s_[2][1] == j_ && s_[2][2] == k_ && s_[2][3] == l_ && s_[3][0] == m_ && s_[3][1] == n_ && s_[3][2] == o_ && s_[3][3] == p_) {
+        stopTimer(timer1);
         showMessage("성공!");
+        setObjectImage(chest4, "chest.png");
         enterScene(scene1);
         showObject(start3);
         showObject(restart);
         showObject(start4);
         showObject(end);
-        hideObject(stopwatch);
-        hideObject(chest);
-        hideObject(hint4);
+        
+        
         hideObject(hintp4);
-        stopTimer(timer1);
+
+       
     }
 }
 
@@ -403,6 +407,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
             }
         }
     }
+
     if (object == end) {
         endGame();
     }
