@@ -7,9 +7,11 @@
 #pragma comment(lib, "Bangtal.lib")
 
 SceneID scene1, scene2, scene3;
-ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4,restart;
+ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4,restart,key,chest3,stopwatch,chest4;
 SoundID ost1;
 TimerID timer1;
+
+bool closed1 = true,closed2 = true;
 
 void time() {
     timer1 = createTimer(270.0f);
@@ -58,6 +60,8 @@ void endG3() {
         hideObject(hint3);
         hideObject(hintp3);
         showObject(end);
+        hideObject(chest);
+        hideObject(stopwatch);
         stopTimer(timer1);
     }
 }
@@ -69,6 +73,8 @@ void endG4() {
         showObject(restart);
         showObject(start4);
         showObject(end);
+        hideObject(stopwatch);
+        hideObject(chest);
         hideObject(hint4);
         hideObject(hintp4);
         stopTimer(timer1);
@@ -356,7 +362,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         hideObject(restart);
         enterScene(scene2);
         setTimer(timer1, 270.0f);
-       
+        closed1 = true;
         random3();
          startTimer(timer1);
         return;
@@ -368,12 +374,35 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         enterScene(scene3);
         hideObject(restart);
         setTimer(timer1, 270.f);
+        closed2 = true;
         random4();
+        
         startTimer(timer1);
        
         return;
     }
     
+    if (object == key) {
+        pickObject(key);
+    }
+    if (object == chest3) {
+        if (closed1 == true) {
+            if (getHandObject() == key) {
+                setObjectImage(chest3, "stopwatch.png");
+                increaseTimer(timer1, 30.f);
+                closed1 = false;
+            }
+        }
+    }
+    if (object == chest4) {
+        if (closed1 == true) {
+            if (getHandObject() == key) {
+                setObjectImage(chest4, "stopwatch.png");
+                increaseTimer(timer1, 30.f);
+                closed1 = false;
+            }
+        }
+    }
     if (object == end) {
         endGame();
     }
@@ -690,7 +719,14 @@ int main() {
     scene2 = createScene("3X3퍼즐", "구멍.png");
     scene3 = createScene("4X4퍼즐", "구멍.png");
 
-    restart = createObject("restart", "restart.png", scene1, 700, 550, true);
+  
+
+    chest3 = createObject("보물상자", "chest.png", scene2, 70, 600, true);
+    chest4 = createObject("보물상자", "chest.png", scene3, 70, 600, true);
+
+    key = createObject("열쇠", "열쇠.png", scene1,150, 550, true);
+    scaleObject(key, 0.3f);
+    restart = createObject("restart", "restart.png", scene1, 700, 550, false);
     hint3 = createObject("hint", "hint.png", scene2, 1000, 450, true);
     hintp3 = createObject("hint", "hintp.png", scene2, 950, 200, false);
     hint4 = createObject("hint", "hint.png", scene3, 1000, 450, true);
