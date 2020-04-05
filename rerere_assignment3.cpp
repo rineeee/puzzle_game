@@ -7,11 +7,14 @@
 #pragma comment(lib, "Bangtal.lib")
 
 SceneID scene1, scene2, scene3;
-ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_,hint3,hintp3,hint4,hintp4,restart,key,chest3,stopwatch,chest4,restart3,restart4;
+ObjectID start3, start4, a, b, c, d, e, f, g, h, i, point, r, end, a_, b_, c_, d_, e_, f_, g_, h_, i_, j_, k_, l_, m_, n_, o_, p_, hint3, hintp3, hint4, hintp4, restart, key, chest3, stopwatch, chest4, restart3, restart4;
 SoundID ost1;
 TimerID timer1;
+time_t timerstart, timerend;
+double timerresult;
 
-bool closed1 = true,closed2 = true;
+
+bool closed1 = true, closed2 = true;
 
 void time() {
     timer1 = createTimer(270.0f);
@@ -42,7 +45,7 @@ void sceneCallback(SceneID scene, EventID event)
         else if (event == EVENT_LEAVE_SCENE)
             stopSound(ost1);
     }
-     if (scene == scene3) {
+    if (scene == scene3) {
         if (event == EVENT_ENTER_SCENE)
             playSound(ost1);
         else if (event == EVENT_LEAVE_SCENE)
@@ -53,23 +56,35 @@ void sceneCallback(SceneID scene, EventID event)
 void endG3() {
     if (s[0][0] == a && s[0][1] == b && s[0][2] == c && s[1][0] == d && s[1][1] == e && s[1][2] == f && s[2][0] == g && s[2][1] == h && s[2][2] == i) {
         stopTimer(timer1);
+        timerend = time(NULL);
+        timerresult = (double)(timerend - timerstart);
+        setTimer(timer1, timerresult);
+        showTimer(timer1);
+        timerend = 0;
+        timerstart = 0;
         showMessage("성공!");
         setObjectImage(chest3, "chest.png");
         enterScene(scene1);
         showObject(restart);
         showObject(restart3);
         showObject(restart4);
-        
+
         hideObject(hintp3);
-        showObject(end);        
-     
-  
-        
+        showObject(end);
+
+
+
     }
 }
 void endG4() {
     if (s_[0][0] == a_ && s_[0][1] == b_ && s_[0][2] == c_ && s_[0][3] == d_ && s_[1][0] == e_ && s_[1][1] == f_ && s_[1][2] == g_ && s_[1][3] == h_ && s_[2][0] == i_ && s_[2][1] == j_ && s_[2][2] == k_ && s_[2][3] == l_ && s_[3][0] == m_ && s_[3][1] == n_ && s_[3][2] == o_ && s_[3][3] == p_) {
         stopTimer(timer1);
+        timerend = time(NULL);
+        timerresult = (double)(timerend - timerstart);
+        setTimer(timer1, timerresult);
+        showTimer(timer1);
+        timerend = 0;
+        timerstart = 0;
         showMessage("성공!");
         setObjectImage(chest4, "chest.png");
         enterScene(scene1);
@@ -77,11 +92,11 @@ void endG4() {
         showObject(restart);
         showObject(restart4);
         showObject(end);
-        
-        
+
+
         hideObject(hintp4);
 
-       
+
     }
 }
 
@@ -112,7 +127,7 @@ void random3() {
     int k = 0;
     ObjectID temp;
     srand(time(NULL));
-    while (k < 100) {
+    while (k < 70) {
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
                 if (r[i][j] == 1) {
@@ -241,7 +256,7 @@ void random4() {
     int k_ = 0;
     ObjectID temp_;
     srand(time(NULL));
-    while (k_ < 100) {
+    while (k_ < 70) {
         for (i_ = 0; i_ < 4; i_++) {
             for (j_ = 0; j_ < 4; j_++) {
                 if (r_[i_][j_] == 1) {
@@ -368,7 +383,8 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         setTimer(timer1, 270.0f);
         closed1 = true;
         random3();
-         startTimer(timer1);
+        startTimer(timer1);
+        timerstart = time(NULL);
         return;
     }
     if (object == start4) {
@@ -380,9 +396,9 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         setTimer(timer1, 270.f);
         closed2 = true;
         random4();
-        
+
         startTimer(timer1);
-       
+        timerstart = time(NULL);
         return;
     }
     if (object == restart3) {
@@ -395,6 +411,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         closed1 = true;
         random3();
         startTimer(timer1);
+        timerstart = time(NULL);
         return;
     }
     if (object == restart4) {
@@ -408,10 +425,10 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         random4();
 
         startTimer(timer1);
-
+        timerstart = time(NULL);
         return;
     }
-    
+
     if (object == key) {
         pickObject(key);
     }
@@ -425,11 +442,11 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
         }
     }
     if (object == chest4) {
-        if (closed1 == true) {
+        if (closed2 == true) {
             if (getHandObject() == key) {
                 setObjectImage(chest4, "stopwatch.png");
                 increaseTimer(timer1, 30.f);
-                closed1 = false;
+                closed2 = false;
             }
         }
     }
@@ -750,12 +767,12 @@ int main() {
     scene2 = createScene("3X3퍼즐", "구멍.png");
     scene3 = createScene("4X4퍼즐", "구멍.png");
 
-  
+
 
     chest3 = createObject("보물상자", "chest.png", scene2, 70, 600, true);
     chest4 = createObject("보물상자", "chest.png", scene3, 70, 600, true);
 
-    key = createObject("열쇠", "열쇠.png", scene1,150, 550, true);
+    key = createObject("열쇠", "열쇠.png", scene1, 150, 550, true);
     scaleObject(key, 0.3f);
     restart = createObject("restart", "restart.png", scene1, 700, 550, false);
     hint3 = createObject("hint", "hint.png", scene2, 1000, 450, true);
